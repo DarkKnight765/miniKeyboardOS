@@ -1,0 +1,20 @@
+# Build artifacts
+*.o
+*.elf
+*.bin
+*.img
+*.iso
+
+# Generated ISO directory
+iso/
+
+# Learning documentation (personal, not for GitHub)
+learning/
+
+# Tooling / editor
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs / junk
+*.log
