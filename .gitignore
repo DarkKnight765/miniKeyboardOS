@@ -11,6 +11,9 @@ iso/
 # Learning documentation (personal, not for GitHub)
 learning/
 
+# Personal dev notes (not for GitHub)
+personal-notes/
+
 # Tooling / editor
 .vscode/
 .DS_Store
