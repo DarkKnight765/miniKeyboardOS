@@ -79,9 +79,6 @@ qemu-system-i386 -cdrom miniKeyboardOS.iso -m 256M -display gtk -serial stdio
 - `linker.ld` — places `.multiboot` at start and kernel at 1MB
 - `Makefile` — Windows build + WSL ISO targets
 
-## Screenshots
-
-![miniKeyboardOS boot](docs/screenshot.png)
 
 ## Architecture & Flow
 
