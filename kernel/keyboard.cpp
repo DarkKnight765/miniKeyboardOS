@@ -179,28 +179,34 @@ void keyboard_poll()
     if ((inb(KBD_CTRL_PORT) & 1) != 0)
     {
         uint8_t scancode = inb(KBD_DATA_PORT);
+        static uint8_t last_scancode = 0;
 
-        if (scancode < 128 && scancode < sizeof(SCANCODE_MAP))
+        // Key release: reset last so same key can be pressed again
+        if (scancode & 0x80)
+        {
+            last_scancode = 0;
+            return;
+        }
+
+        // Dedup: skip if this key is still held (typematic repeat)
+        if (scancode == last_scancode)
+            return;
+        last_scancode = scancode;
+
+        if (scancode < sizeof(SCANCODE_MAP))
         {
             char ch = SCANCODE_MAP[scancode];
+            ch = apply_shift_caps(ch);
             if (ch != 0)
             {
                 if (ch == '\n')
-                {
                     vga_putchar('\n');
-                }
                 else if (ch == '\b')
-                {
                     vga_print("\b \b");
-                }
                 else if (ch == '\t')
-                {
                     vga_print("    ");
-                }
                 else
-                {
                     vga_putchar(ch);
-                }
             }
         }
     }

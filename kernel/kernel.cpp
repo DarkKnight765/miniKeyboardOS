@@ -10,7 +10,7 @@ extern "C" void kernel_main()
     vga_print("========================================\n\n");
 
     // Unique build marker to confirm new binary is running
-    vga_print("[BUILD] 7F2C-KEYBOARD-POLL\n\n");
+    vga_print("[BUILD] A1B2-IRQ-ONLY\n\n");
 
     vga_print("Step 1: IDT... ");
     idt_init();
@@ -27,19 +27,20 @@ extern "C" void kernel_main()
     vga_print("\n=== SYSTEM READY ===\n");
     vga_print("Type to see keyboard input:\n\n");
 
-    // Interrupts handle keyboard, just idle with spinner
+    // Primary input: IRQ1 interrupt → keyboard_isr()
+    // Fallback: keyboard_poll() if ISR not firing (QEMU quirk)
+    // Dedup logic in poll prevents double prints
     const char spinner[4] = {'|', '/', '-', '\\'};
     uint32_t t = 0;
     while (1)
     {
-        // Heartbeat: update spinner every cycle chunk
         t++;
-        if ((t & 0xFFFF) == 0)
+        if ((t & 0x3FFFF) == 0)
         {
             uint16_t *vga = (uint16_t *)0xB8000;
-            char c = spinner[(t >> 16) & 3];
+            char c = spinner[(t >> 18) & 3];
             vga[0] = (0x0A << 8) | c; // green spinner
         }
-        keyboard_poll(); // Poll keyboard for visible output + spinner
+        keyboard_poll(); // fallback: safe to call, dedup prevents doubles
     }
 }

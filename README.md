@@ -2,6 +2,8 @@
 
 Minimal x86 32-bit kernel that boots via GRUB (Multiboot v1) and prints keyboard input to the VGA text console. Built for learning, debugging, and rapid iteration.
 
+![miniKeyboardOS demo](docs/demo.gif)
+
 ## Highlights
 
 - Multiboot v1 header (`0x1BADB002`) and GRUB ISO boot
@@ -136,6 +138,15 @@ make all
 wsl -e bash -c "cd '/mnt/d/PROJECTS __ DEV/minikeyboardos' ; make iso"
 qemu-system-i386 -cdrom miniKeyboardOS.iso -m 256M -display gtk -serial stdio
 ```
+
+## Future Enhancements
+
+- **Shift symbol map** — full Shift+key support for `!@#$%^&*()_+{}:|<>?` etc.
+- **Scan code set 2 support** — translate Set 2 scancodes from modern keyboards
+- **Memory manager** — physical frame allocator using Multiboot memory map
+- **Paging** — set up page tables and enable virtual memory (CR0.PG)
+- **Basic shell** — command buffer, parse and execute simple commands
+- **System calls** — ring 3 user mode + `int 0x80` interface
 
 ## License
 
