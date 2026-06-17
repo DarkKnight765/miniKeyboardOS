@@ -2,7 +2,7 @@
 
 Minimal x86 32-bit kernel that boots via GRUB (Multiboot v1) and prints keyboard input to the VGA text console. Built for learning, debugging, and rapid iteration.
 
-![miniKeyboardOS demo](docs/miniKeyboardOS_demo.gif)
+https://github.com/DarkKnight765/miniKeyboardOS/raw/main/docs/demo_keyboard_os.mp4
 
 ## Highlights
 
